@@ -1,6 +1,7 @@
 import React,{useState} from 'react';
 import { StyleSheet, Text, View, Button, TextInput, ScrollView,  FlatList, TouchableOpacity} from 'react-native';
 import Header from './components/header'
+import TodoItem from './components/todoItem'
 //import { setWorldAlignment } from 'expo/build/AR';
 
 export default function App() {
@@ -10,6 +11,11 @@ export default function App() {
     {text:'play on switch', key:'3'},
   ])
 
+  const pressHandler=(key)=>{
+    settodos((prevTodos)=>{
+      return prevTodos.filter(todos=>todos.key!=key);
+    });
+  }
   return(
    <View style={styles.container}>
      <Header/>
@@ -19,7 +25,7 @@ export default function App() {
         <FlatList
           data={todos} /* pass todos as the data for flat list*/
           renderItem={({item})=>(/*item passed into the function needs to be deconstructed by curly braces*/
-            <Text> {item.text}</Text>/*function returns some JSX*/
+            <TodoItem item={item} pressHandler={pressHandler}/>
           )}
         />
       </View>
