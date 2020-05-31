@@ -2,6 +2,7 @@ import React,{useState} from 'react';
 import { StyleSheet, Text, View, Button, TextInput, ScrollView,  FlatList, TouchableOpacity} from 'react-native';
 import Header from './components/header'
 import TodoItem from './components/todoItem'
+import Addtodo from './components/addtodo'
 //import { setWorldAlignment } from 'expo/build/AR';
 
 export default function App() {
@@ -16,11 +17,23 @@ export default function App() {
       return prevTodos.filter(todos=>todos.key!=key);
     });
   }
+
+  /*submits a new todo item*/
+  const submitHandler=(text)=>{
+    /* relies on prevTodos */
+    settodos((prevTodos)=>{
+      return[
+          {text:text, key:Math.random().toString},
+          ...prevTodos
+        ];
+    })
+  }
+  /* This Function takes in text and uses prevTodos to  */
   return(
    <View style={styles.container}>
      <Header/>
      <View style={styles.content}>
-      {/* todo from */}
+      <Addtodo submitHandler={submitHandler}/>
       <View style={styles.list}>
         <FlatList
           data={todos} /* pass todos as the data for flat list*/
